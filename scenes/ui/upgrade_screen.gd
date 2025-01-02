@@ -5,6 +5,7 @@ signal upgrade_selected(upgrade: AbilityUpgrade)
 @export var upgrade_card_scene: PackedScene
 
 @onready var card_container: HBoxContainer = %CardContainer
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
 ## The reason for nesting this into multiple functions is that each 'thing' should have its own functionality
@@ -16,14 +17,19 @@ func _ready() -> void:
 	get_tree().paused = true
 
 func set_ability_upgrades(upgrades: Array[AbilityUpgrade]):
+	var delay = 0
 	for upgrade in upgrades:
 		var card_instance = upgrade_card_scene.instantiate()
 		card_container.add_child(card_instance)
 		card_instance.set_ability_upgrade(upgrade)
+		card_instance.play_in(delay)
 		card_instance.selected.connect(on_upgrade_selected.bind(upgrade)) # the 'selected' signal does not set any arguments by itself, but binding the 'upgrade' var into it, we're able to pass it into the function we're calling
+		delay += 0.2
 		
 		
 func on_upgrade_selected(upgrade: AbilityUpgrade): # every time we receive the 'connect' signal, this function will be called too
 	upgrade_selected.emit(upgrade) # emits the selected upgrade
+	animation_player.play("out")
+	await animation_player.animation_finished
 	get_tree().paused = false
 	queue_free()

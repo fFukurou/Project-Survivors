@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameEvents="*res://scenes/autoload/game_event.tscn"
+GameEvents="*res://scenes/autoload/game_events.tscn"
 
 [debug]
 
@@ -37,6 +37,7 @@ window/vsync/vsync_mode=0
 player=""
 enemy=""
 entities_layer=""
+upgrade_card=""
 
 [gui]
 

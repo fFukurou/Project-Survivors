@@ -1,7 +1,70 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b4577khi26rgk"]
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://b4577khi26rgk"]
 
 [ext_resource type="FontFile" uid="uid://ccschhqgcsm03" path="res://resources/theme/Rockboxcond12.ttf" id="1_ht4gj"]
+[ext_resource type="Texture2D" uid="uid://cxi1aplofkx7f" path="res://assets/ui/ui.png" id="1_t6lnc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_js7br"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+texture = ExtResource("1_t6lnc")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+region_rect = Rect2(18, 2, 12, 12)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cq1dw"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nlfu3"]
+texture = ExtResource("1_t6lnc")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+region_rect = Rect2(20, 20, 8, 8)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y3e5k"]
+texture = ExtResource("1_t6lnc")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+region_rect = Rect2(4, 20, 8, 8)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g2wnp"]
+texture = ExtResource("1_t6lnc")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+region_rect = Rect2(4, 20, 8, 8)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fbhpe"]
+texture = ExtResource("1_t6lnc")
+texture_margin_left = 4.0
+texture_margin_top = 13.0
+texture_margin_right = 4.0
+texture_margin_bottom = 10.0
+region_rect = Rect2(0, 0, 16, 16)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gag5t"]
+bg_color = Color(0.247059, 0.14902, 0.192157, 1)
 
 [resource]
 default_font = ExtResource("1_ht4gj")
 default_font_size = 16
+AlternatePanelContainer/base_type = &"PanelContainer"
+AlternatePanelContainer/styles/panel = SubResource("StyleBoxTexture_js7br")
+Button/colors/font_color = Color(0.247059, 0.14902, 0.192157, 1)
+Button/colors/font_focus_color = Color(0.247059, 0.14902, 0.192157, 1)
+Button/colors/font_hover_color = Color(0.741176, 0.423529, 0.290196, 1)
+Button/colors/font_pressed_color = Color(0.247059, 0.14902, 0.192157, 1)
+Button/styles/focus = SubResource("StyleBoxEmpty_cq1dw")
+Button/styles/hover = SubResource("StyleBoxTexture_nlfu3")
+Button/styles/normal = SubResource("StyleBoxTexture_y3e5k")
+Button/styles/pressed = SubResource("StyleBoxTexture_g2wnp")
+Label/constants/line_spacing = 0
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_fbhpe")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_gag5t")

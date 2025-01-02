@@ -10,19 +10,18 @@ class_name Player
 @onready var abilities: Node = $Abilities
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var visuals: Node2D = $Visuals
+@onready var velocity_component: Node = $VelocityComponent
 
 
-
-
-
-
-
-const MAX_SPEED: int = 125
+#const MAX_SPEED: int = 125
 #const ACCELERATION_SMOOTHING = 25 #I won't use this because the game just feels less responsive to me
 
 var number_colliding_bodies = 0
+var base_speed = 0
 
 func _ready() -> void:
+	base_speed = velocity_component.max_speed
+	
 	collision_area_2d.body_entered.connect(on_body_entered)
 	collision_area_2d.body_exited.connect(on_body_exited)
 	damage_interval_timer.timeout.connect(on_damage_interval_timer_timeout) # When the timer... times out, we'll call the check_damage function. The timeout is a One Shot, so no worries about it being called on an infinite loop
@@ -34,12 +33,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var movement_vector = get_movement_vector()
 	var direction = movement_vector.normalized() # Normalizing it so the returned Vector2 is not inconsistent with diagonal movement
-	velocity = direction * MAX_SPEED # velocity is a reserved keyword, and will move the CharacterBody2 automatically based on it
-	
-	#velocity = velocity.lerp(target_velocity, 1 - exp(-delta * ACCELERATION_SMOOTHING)) # Again, won't use acceleration because it just feels sluggish
-	
-	move_and_slide() # Moves the character
-	
+	velocity_component.accelerate_in_direction(direction)
+	velocity_component.move(self)
+	#velocity = direction * MAX_SPEED # velocity is a reserved keyword, and will move the CharacterBody2 automatically based on it
+
 	if movement_vector.x != 0 || movement_vector.y != 0:
 		animation_player.play("walk")
 	else:
@@ -84,13 +81,13 @@ func on_damage_interval_timer_timeout(): # when the timer times out, check if th
 
 
 func on_health_changed():
+	GameEvents.emit_player_damage()
 	update_health_display()
 
 
 func on_ability_upgrade_added(ability_upgrade: AbilityUpgrade, current_upgrades: Dictionary):
-	if not ability_upgrade is Ability:
-		return
-		
-	var ability = ability_upgrade as Ability
-	abilities.add_child(ability.ability_controller_scene.instantiate())
-		
+	if ability_upgrade is Ability:
+		var ability = ability_upgrade as Ability
+		abilities.add_child(ability.ability_controller_scene.instantiate())
+	elif ability_upgrade.id == "player_speed":
+		velocity_component.max_speed = base_speed + (base_speed * current_upgrades["player_speed"]["quantity"] * 0.5)

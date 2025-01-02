@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bmv7sfqqvdx3r"]
+[gd_scene load_steps=16 format=3 uid="uid://bmv7sfqqvdx3r"]
 
 [ext_resource type="Script" path="res://scenes/game_object/basic_enemy/basic_enemy.gd" id="1_0n5co"]
 [ext_resource type="Texture2D" uid="uid://srbr2fjy8obo" path="res://scenes/game_object/basic_enemy/basic_enemy.png" id="1_prink"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://uy40qp4i0xtf" path="res://scenes/component/death_component.tscn" id="4_060j2"]
 [ext_resource type="PackedScene" uid="uid://yap0gec7ark8" path="res://scenes/component/hurtbox_component.tscn" id="4_lr8lf"]
 [ext_resource type="PackedScene" uid="uid://dipfqn71e4fwg" path="res://scenes/component/velocity_component.tscn" id="4_oxu4x"]
+[ext_resource type="PackedScene" uid="uid://bp6vpq213uaqv" path="res://scenes/component/hit_flash_component.tscn" id="8_08xhg"]
 
 [sub_resource type="Animation" id="Animation_mdrwj"]
 length = 0.001
@@ -70,6 +71,35 @@ _data = {
 "walk": SubResource("Animation_toakf")
 }
 
+[sub_resource type="Shader" id="Shader_k87en"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+uniform float lerp_percent : hint_range(0.0, 1.0);
+
+void fragment() {
+	// Called for every pixel the material is visible on.
+	vec4 texture_color = texture(TEXTURE, UV);
+	
+	vec4 final_color = mix(texture_color, vec4(1.0, 1.0, 1.0, texture_color.a), lerp_percent);
+	COLOR = final_color;
+}
+
+//void light() {
+	// Called for every pixel for every light affecting the CanvasItem.
+	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w7wip"]
+resource_local_to_scene = true
+shader = SubResource("Shader_k87en")
+shader_parameter/lerp_percent = 0.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ajws"]
 radius = 12.0
 
@@ -94,6 +124,11 @@ autoplay = "walk"
 health_component = NodePath("../HealthComponent")
 
 [node name="VelocityComponent" parent="." instance=ExtResource("4_oxu4x")]
+
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("8_08xhg")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Visuals/Sprite2D")
+hit_flash_material = SubResource("ShaderMaterial_w7wip")
 
 [node name="DeathComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("4_060j2")]
 health_component = NodePath("../HealthComponent")
