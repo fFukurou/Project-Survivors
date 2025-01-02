@@ -67,4 +67,3 @@ func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Diction
 	timer.wait_time = base_wait_time * (1 - percent_reduction) # settings the new cooldown time for the ability. If it was 1 upgrade, 10%, 2 --> 20% and so on
 	timer.start() # if we don't do this, it won't reset the remaining time to the new wait_time
 	
-	#print(timer.wait_time)

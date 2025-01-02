@@ -1,9 +1,93 @@
-[gd_scene load_steps=10 format=3 uid="uid://cuqw016ohwcpl"]
+[gd_scene load_steps=13 format=3 uid="uid://cuqw016ohwcpl"]
 
 [ext_resource type="Texture2D" uid="uid://dsexwdamnccwv" path="res://scenes/game_object/player/player.png" id="1_1uq5x"]
 [ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="1_1uqtb"]
 [ext_resource type="PackedScene" uid="uid://cmpymb0oe25ut" path="res://scenes/ability/sword_ability_controller/sword_ability_controller.tscn" id="2_torlm"]
 [ext_resource type="PackedScene" uid="uid://bdbn4rfuvuu2n" path="res://scenes/component/health_component.tscn" id="2_vstk8"]
+
+[sub_resource type="Animation" id="Animation_kxlb3"]
+resource_name = "walk"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2dysw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ko36p"]
+_data = {
+"RESET": SubResource("Animation_2dysw"),
+"walk": SubResource("Animation_kxlb3")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gag5t"]
 bg_color = Color(0.247059, 0.14902, 0.192157, 1)
@@ -30,11 +114,16 @@ collision_layer = 0
 motion_mode = 1
 script = ExtResource("1_1uqtb")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ko36p")
+}
+
 [node name="HealthComponent" parent="." instance=ExtResource("2_vstk8")]
 
-[node name="AbilityManager" type="Node" parent="."]
+[node name="Abilities" type="Node" parent="."]
 
-[node name="SwordAbilityController" parent="AbilityManager" instance=ExtResource("2_torlm")]
+[node name="SwordAbilityController" parent="Abilities" instance=ExtResource("2_torlm")]
 
 [node name="DamageIntervalTimer" type="Timer" parent="."]
 wait_time = 0.5

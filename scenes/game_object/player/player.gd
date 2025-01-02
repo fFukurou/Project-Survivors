@@ -7,6 +7,8 @@ class_name Player
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var damage_interval_timer: Timer = $DamageIntervalTimer # the first time the TIMER is called is when there's collision with an enemy, and then on a timeout to see if there's still a collision, if not, then it will not be called again
 @onready var health_bar: ProgressBar = $HealthBar
+@onready var abilities: Node = $Abilities
+
 
 
 
@@ -21,6 +23,7 @@ func _ready() -> void:
 	collision_area_2d.body_exited.connect(on_body_exited)
 	damage_interval_timer.timeout.connect(on_damage_interval_timer_timeout) # When the timer... times out, we'll call the check_damage function. The timeout is a One Shot, so no worries about it being called on an infinite loop
 	health_component.health_changed.connect(on_health_changed)
+	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 	update_health_display()
 	
 
@@ -48,7 +51,6 @@ func check_deal_damage():
 		return
 	health_component.damage(1)
 	damage_interval_timer.start() # starts the iframe timer ( one shot )
-	print(health_component.current_health)
 	
 
 func update_health_display():
@@ -70,3 +72,12 @@ func on_damage_interval_timer_timeout(): # when the timer times out, check if th
 
 func on_health_changed():
 	update_health_display()
+
+
+func on_ability_upgrade_added(ability_upgrade: AbilityUpgrade, current_upgrades: Dictionary):
+	if not ability_upgrade is Ability:
+		return
+		
+	var ability = ability_upgrade as Ability
+	abilities.add_child(ability.ability_controller_scene.instantiate())
+		
