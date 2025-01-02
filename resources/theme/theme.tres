@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b4577khi26rgk"]
+
+[ext_resource type="FontFile" uid="uid://ccschhqgcsm03" path="res://resources/theme/Rockboxcond12.ttf" id="1_ht4gj"]
+
+[resource]
+default_font = ExtResource("1_ht4gj")
+default_font_size = 16

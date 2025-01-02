@@ -8,6 +8,10 @@ class_name Player
 @onready var damage_interval_timer: Timer = $DamageIntervalTimer # the first time the TIMER is called is when there's collision with an enemy, and then on a timeout to see if there's still a collision, if not, then it will not be called again
 @onready var health_bar: ProgressBar = $HealthBar
 @onready var abilities: Node = $Abilities
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var visuals: Node2D = $Visuals
+
+
 
 
 
@@ -35,6 +39,15 @@ func _process(delta: float) -> void:
 	#velocity = velocity.lerp(target_velocity, 1 - exp(-delta * ACCELERATION_SMOOTHING)) # Again, won't use acceleration because it just feels sluggish
 	
 	move_and_slide() # Moves the character
+	
+	if movement_vector.x != 0 || movement_vector.y != 0:
+		animation_player.play("walk")
+	else:
+		animation_player.play("RESET")
+		
+	var move_sign = sign(movement_vector.x)
+	if move_sign != 0:
+		visuals.scale = Vector2(move_sign, 1)
 
 
 func get_movement_vector():
