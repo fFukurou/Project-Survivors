@@ -23,7 +23,9 @@ func _on_timer_timeout() -> void:
 	var spawn_position = player.global_position + (random_direction * SPAWN_RADIUS)
 	
 	var enemy = basic_enemy_scene.instantiate() as Node2D # Creates the enemy
-	get_parent().add_child(enemy) # Adds the enemy as a child of the 'Main' scene... since EnemyManager is a child of it 
+	
+	var entities_layer = get_tree().get_first_node_in_group("entities_layer")
+	entities_layer.add_child(enemy) # Adds the enemy as a child of the 'Entities' scene...
 	enemy.global_position = spawn_position # Spawns the enemy in the spawn position we calculated
 	
 	

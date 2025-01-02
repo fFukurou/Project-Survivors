@@ -7,9 +7,15 @@ extends Node
 
 @export var sword_ability: PackedScene
 
+var damage = 5
+var base_wait_time # We'e storing the base wait time for the ability so that we can change it later through upgrades
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	base_wait_time = timer.wait_time
 	timer.timeout.connect(on_timer_timeout)
+	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -41,11 +47,24 @@ func on_timer_timeout():
 	)
 
 
-	var sword_instance = sword_ability.instantiate() as Node2D
-	player.get_parent().add_child(sword_instance) # get_parent will get the "Main" node, and will then add a child to it (The node sword_instance)
+	var sword_instance = sword_ability.instantiate() as SwordAbility
+	var foreground_layer = get_tree().get_first_node_in_group("foreground_layer") # Will get the Foreground Node2D in the game scene
+	foreground_layer.add_child(sword_instance) # will get the Foreground node, and will then add a child to it (The node sword_instance)
+	sword_instance.hitbox_component.damage = self.damage
+	
 	sword_instance.global_position = enemies[0].global_position
 	sword_instance.global_position += Vector2.RIGHT.rotated(randf_range(0, TAU)) * 4 # 'TAU' means 2PI; This will rotate the sword by a random angle, starting from the RIGHT
 
 	var enemy_direction = enemies[0].global_position - sword_instance.global_position
 	sword_instance.rotation = enemy_direction.angle()
 	
+
+func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary): # When we get an upgrade to this ability (sword), what do we do? This
+	if upgrade.id != "sword_rate":
+		return
+		
+	var percent_reduction = current_upgrades["sword_rate"]["quantity"] * 0.1 # How much of these sword_rate upgrades do we have? We multiply it by 0.1
+	timer.wait_time = base_wait_time * (1 - percent_reduction) # settings the new cooldown time for the ability. If it was 1 upgrade, 10%, 2 --> 20% and so on
+	timer.start() # if we don't do this, it won't reset the remaining time to the new wait_time
+	
+	#print(timer.wait_time)
