@@ -51,6 +51,7 @@ enemy=""
 entities_layer=""
 upgrade_card=""
 meta_upgrade_card=""
+arena_time_manager=""
 
 [gui]
 

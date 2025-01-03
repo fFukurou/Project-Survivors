@@ -7,6 +7,7 @@ const SPAWN_RADIUS = 380
 @export var basic_enemy_scene: PackedScene
 @export var wizard_enemy_scene: PackedScene
 @export var bat_enemy_scene: PackedScene
+@export var crab_enemy_scene: PackedScene
 @export var arena_time_manager: Node
 
 
@@ -71,16 +72,30 @@ func on_timer_timeout() -> void:
 func on_arena_difficulty_increased(arena_difficulty: int):
 	var time_off = (0.1 / 12) * arena_difficulty  # 5 seconds per difficulty increase, and there's 12 "5 seconds segments" in a minute
 	time_off = min(time_off, 0.7)
-	#print(time_off)
+	print(arena_difficulty)
 	timer.wait_time = base_spawn_time - time_off
 	
 	if arena_difficulty == 12:
 		enemy_table.add_item( bat_enemy_scene, 7 )
 	elif arena_difficulty == 24:
 		enemy_table.add_item( wizard_enemy_scene, 13 )
+	elif arena_difficulty == 59:
+		enemy_table.remove_item(bat_enemy_scene)
+		enemy_table.remove_item(wizard_enemy_scene)
+		enemy_table.remove_item(basic_enemy_scene)
+		enemy_table.add_item(crab_enemy_scene, 1000)
+		var boss = crab_enemy_scene.instantiate() as Node2D # Creates the boss
+		
+		var entities_layer = get_tree().get_first_node_in_group("entities_layer")
+		entities_layer.add_child(boss) # Adds the enemy as a child of the 'Entities' scene...
+		boss.global_position = get_spawn_position() # Spawns the enemy in the spawn position we calculated
+		
+		number_to_spawn = 0
 	
 	if (arena_difficulty % 6) == 0:
 		number_to_spawn += 1
+		
+	
 		
 	
 	

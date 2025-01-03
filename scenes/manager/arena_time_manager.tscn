@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/manager/arena_time_manager.gd" id="1_o8x51"]
 [ext_resource type="PackedScene" uid="uid://c2qpxkmemry1l" path="res://scenes/ui/end_screen.tscn" id="2_r12bp"]
 
-[node name="ArenaTimeManager" type="Node"]
+[node name="ArenaTimeManager" type="Node" groups=["arena_time_manager"]]
 script = ExtResource("1_o8x51")
 end_screen_scene = ExtResource("2_r12bp")
 
