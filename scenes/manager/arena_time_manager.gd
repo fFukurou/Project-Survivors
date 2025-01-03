@@ -29,3 +29,4 @@ func get_time_elapsed():
 func on_timer_timeout(): # When this times out, it means the player won ( survived long enough ) 
 	var end_screen_instance = end_screen_scene.instantiate() # creates a victory screen instance
 	add_child(end_screen_instance) 
+	end_screen_instance.play_jingle()

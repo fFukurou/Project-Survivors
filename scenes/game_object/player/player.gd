@@ -11,6 +11,7 @@ class_name Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var visuals: Node2D = $Visuals
 @onready var velocity_component: Node = $VelocityComponent
+@onready var hit_random_stream_player: AudioStreamPlayer2D = $HitRandomStreamPlayer
 
 
 #const MAX_SPEED: int = 125
@@ -83,6 +84,7 @@ func on_damage_interval_timer_timeout(): # when the timer times out, check if th
 func on_health_changed():
 	GameEvents.emit_player_damage()
 	update_health_display()
+	hit_random_stream_player.play_random()
 
 
 func on_ability_upgrade_added(ability_upgrade: AbilityUpgrade, current_upgrades: Dictionary):

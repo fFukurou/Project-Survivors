@@ -6,6 +6,8 @@ extends CanvasLayer
 @onready var quit_button: Button = %QuitButton
 @onready var title_label: Label = %TitleLabel
 @onready var description_label: Label = %DescriptionLabel
+@onready var victory_stream_player: AudioStreamPlayer = $VictoryStreamPlayer
+@onready var defeat_stream_player: AudioStreamPlayer = $DefeatStreamPlayer
 
 
 func _ready() -> void:
@@ -24,6 +26,13 @@ func _ready() -> void:
 func set_defeat():
 	title_label.text = "Defeat"
 	description_label.text = "You lost!"
+	play_jingle(true) # true means... defeat!
+
+func play_jingle(defeat: bool = false):
+	if defeat:
+		defeat_stream_player.play()
+	else:
+		victory_stream_player.play()
 
 func on_restart_button_pressed():
 	get_tree().paused = false
