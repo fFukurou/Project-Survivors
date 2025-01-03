@@ -10,7 +10,13 @@ func _ready() -> void:
 
 
 func on_died(): # 'on_died' because a vial will spawn when the enemy (parent) dies
-	if randf() > drop_percent: # If this random number is not above the drop percent, then it will not drop 
+	var adjusted_drop_percent = drop_percent
+	var experience_gain_upgrade_count = MetaProgression.get_upgrade_count("experience_gain")
+	if experience_gain_upgrade_count > 0:
+		adjusted_drop_percent += 0.2
+	
+	
+	if randf() > adjusted_drop_percent: # If this random number is not above the drop percent, then it will not drop 
 		return 
 	
 	if vial_scene == null:
