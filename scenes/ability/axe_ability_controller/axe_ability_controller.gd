@@ -4,8 +4,10 @@ extends Node
 
 @onready var timer: Timer = $Timer
 
-var base_damage = 10
+var base_damage = 15
 var additional_damage_percent = 1
+
+var axe_damage_upgrade_value = 0.20
 
 func _ready() -> void:
 	timer.timeout.connect(on_timer_timeout)
@@ -29,4 +31,4 @@ func on_timer_timeout():
 
 func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary): # When we get an upgrade to this ability (sword), what do we do? This
 	if upgrade.id == "axe_damage":
-		additional_damage_percent = 1 + (current_upgrades["axe_damage"]["quantity"] * 0.10)
+		additional_damage_percent = 1 + (current_upgrades["axe_damage"]["quantity"] * axe_damage_upgrade_value)

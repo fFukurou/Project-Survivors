@@ -77,7 +77,7 @@ _data = {
 "walk": SubResource("Animation_toakf")
 }
 
-[sub_resource type="Shader" id="Shader_bplh5"]
+[sub_resource type="Shader" id="Shader_ok0na"]
 resource_local_to_scene = true
 code = "shader_type canvas_item;
 
@@ -103,7 +103,7 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w7wip"]
 resource_local_to_scene = true
-shader = SubResource("Shader_bplh5")
+shader = SubResource("Shader_ok0na")
 shader_parameter/lerp_percent = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ajws"]

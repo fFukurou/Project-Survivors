@@ -4,10 +4,12 @@ extends Node
 
 @onready var timer: Timer = $Timer
 
+var sword_damage_upgrade_value = 0.25
+var sword_rate_upgrade_value = 0.15
 
 @export var sword_ability: PackedScene
 
-var base_damage = 5
+var base_damage = 8
 var additional_damage_percent = 1
 var base_wait_time # We'e storing the base wait time for the ability so that we can change it later through upgrades
 
@@ -62,8 +64,8 @@ func on_timer_timeout():
 
 func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary): # When we get an upgrade to this ability (sword), what do we do? This
 	if upgrade.id == "sword_rate":
-		var percent_reduction = current_upgrades["sword_rate"]["quantity"] * 0.1 # How much of these sword_rate upgrades do we have? We multiply it by 0.1
+		var percent_reduction = current_upgrades["sword_rate"]["quantity"] * sword_rate_upgrade_value # How much of these sword_rate upgrades do we have? We multiply it by 0.1
 		timer.wait_time = base_wait_time * (1 - percent_reduction) # settings the new cooldown time for the ability. If it was 1 upgrade, 10%, 2 --> 20% and so on
 		timer.start() # if we don't do this, it won't reset the remaining time to the new wait_time
 	elif upgrade.id == "sword_damage":
-		additional_damage_percent = 1 + (current_upgrades["sword_damage"]["quantity"] * 0.15)
+		additional_damage_percent = 1 + (current_upgrades["sword_damage"]["quantity"] * sword_damage_upgrade_value)

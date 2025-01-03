@@ -4,7 +4,6 @@ extends PanelContainer
 @onready var name_label: Label = %NameLabel
 @onready var description_label: Label = %DescriptionLabel
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var hover_animation_player: AnimationPlayer = $HoverAnimationPlayer
 @onready var progress_bar: ProgressBar = %ProgressBar
 @onready var purchase_button: Button = %PurchaseButton
 @onready var progress_label: Label = %ProgressLabel
