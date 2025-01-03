@@ -1,7 +1,6 @@
 extends CharacterBody2D
 
 @onready var velocity_component: Node = $VelocityComponent
-@onready var boss_health_component: BossHealthComponent = $BossHealthComponent
 @onready var visuals: Node2D = $Visuals
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var hit_random_audio_player_component: AudioStreamPlayer2D = $HitRandomAudioPlayerComponent

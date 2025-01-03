@@ -72,7 +72,8 @@ func on_timer_timeout() -> void:
 func on_arena_difficulty_increased(arena_difficulty: int):
 	var time_off = (0.1 / 12) * arena_difficulty  # 5 seconds per difficulty increase, and there's 12 "5 seconds segments" in a minute
 	time_off = min(time_off, 0.7)
-	print(arena_difficulty)
+	#print(arena_difficulty)
+	#print(number_to_spawn)
 	timer.wait_time = base_spawn_time - time_off
 	
 	if arena_difficulty == 12:
@@ -92,7 +93,7 @@ func on_arena_difficulty_increased(arena_difficulty: int):
 		
 		number_to_spawn = 0
 	
-	if (arena_difficulty % 6) == 0:
+	if (arena_difficulty % 6) == 0 && arena_difficulty < 55:
 		number_to_spawn += 1
 		
 	

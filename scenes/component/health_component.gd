@@ -14,9 +14,6 @@ func _ready() -> void:
 	current_health = max_health
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 
 func damage(damage_amount: float):

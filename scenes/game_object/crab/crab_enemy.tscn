@@ -117,7 +117,6 @@ radius = 7.93735
 [node name="CrabEnemy" type="CharacterBody2D" groups=["enemy"]]
 scale = Vector2(4.66321, 4.66321)
 collision_layer = 8
-collision_mask = 9
 script = ExtResource("1_142d8")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -129,7 +128,6 @@ autoplay = "walk"
 [node name="BossHealthComponent" type="Node" parent="."]
 script = ExtResource("2_ie7k3")
 end_screen_scene = ExtResource("3_20x1y")
-max_health = 1000.0
 
 [node name="VelocityComponent" parent="." instance=ExtResource("3_4sukr")]
 max_speed = 1000
